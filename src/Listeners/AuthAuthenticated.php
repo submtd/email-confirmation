@@ -13,8 +13,8 @@ class AuthAuthenticated
             return;
         }
         if (!Auth::user()->confirmed) {
-            Request::session()->flash('status', 'You must confirm your email address before logging into the site.');
             Auth::logout();
+            Request::session()->flash('status', $event->user->confirmation_token);
         }
     }
 }

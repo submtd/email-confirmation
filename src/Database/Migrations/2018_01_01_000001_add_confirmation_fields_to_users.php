@@ -15,7 +15,7 @@ class AddConfirmationFieldsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('confirmed')->default(false)->after('remember_token');
-            $table->string('confirmation_token', 100)->nullable()->after('confirmed');
+            $table->string('confirmation_token', 32)->nullable()->after('confirmed')->index();
         });
     }
 
@@ -28,7 +28,7 @@ class AddConfirmationFieldsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('confirmed');
-            $table->dropColumn('confirmation_code');
+            $table->dropColumn('confirmation_token');
         });
     }
 }
