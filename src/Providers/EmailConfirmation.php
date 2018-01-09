@@ -1,6 +1,6 @@
 <?php
 
-namespace Submtd\EmailConfirmation;
+namespace Submtd\EmailConfirmation\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
