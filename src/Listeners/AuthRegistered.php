@@ -11,6 +11,10 @@ class AuthRegistered
 
     public function handle($event)
     {
-        dd($event);
+        $user = $event->user;
+        $user->confirmed = false;
+        $user->confirmation_token = str_random(100);
+        $user->save();
+        dd($user);
     }
 }
