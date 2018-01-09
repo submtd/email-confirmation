@@ -4,7 +4,7 @@ namespace Submtd\EmailConfirmation\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class EmailConfirmation extends ServiceProvider
+class EmailConfirmationServiceProvider extends ServiceProvider
 {
     protected $commands = [];
 

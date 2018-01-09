@@ -4,7 +4,7 @@ namespace Submtd\EmailConfirmation\Listeners;
 
 use Illuminate\Support\Facades\Request;
 
-class AuthRegistered
+class AuthRegisteredListener
 {
     public function handle($event)
     {

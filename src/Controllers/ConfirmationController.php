@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
-class Confirmation extends Controller
+class ConfirmationController extends Controller
 {
     protected $model;
 
