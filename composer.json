@@ -16,7 +16,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Submtd\\EmailConfirmation\\EmailConfirmationServiceProvider"
+                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmation",
+                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationEvent"
             ]
         }
     }
