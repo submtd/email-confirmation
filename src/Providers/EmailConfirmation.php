@@ -17,8 +17,8 @@ class EmailConfirmation extends ServiceProvider
 
     public function boot()
     {
-        require __DIR__ . '/Routes.php';
-        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
-        $this->mergeConfigFrom(__DIR__ . '/Config/email-confirmation.php', 'email-confirmation');
+        require __DIR__ . '/../Routes.php';
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->mergeConfigFrom(__DIR__ . '/../Config/email-confirmation.php', 'email-confirmation');
     }
 }
