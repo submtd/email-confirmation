@@ -1,0 +1,24 @@
+{
+    "name": "submtd/email-confirmation",
+    "description": "Add email confirmation to Laravel users",
+    "authors": [
+        {
+            "name": "Steve Harmeyer",
+            "email": "harmeyersteve@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Submtd\\EmailConfirmation\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationServiceProvider",
+                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationEventServiceProvider"
+            ]
+        }
+    }
+}
