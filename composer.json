@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "submtd/flash-message": "@dev"
+        "submtd/flash": "@dev"
     },
     "autoload": {
         "psr-4": {
