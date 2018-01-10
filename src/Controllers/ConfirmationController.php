@@ -4,7 +4,6 @@ namespace Submtd\EmailConfirmation\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Mail;
 use Submtd\EmailConfirmation\Mail\ConfirmEmail;
 
@@ -31,7 +30,7 @@ class ConfirmationController extends Controller
         $user->confirmation_token = null;
         $user->confirmed = true;
         $user->save();
-        Request::session()->flash('status', config('email-confirmation.statusMessages.confirmed'));
+        flashSuccess('email-confirmation::Messages.Confirmed');
         return redirect(route('login'));
     }
 
@@ -41,13 +40,14 @@ class ConfirmationController extends Controller
             abort(403);
         }
         if ($user->confirmed) {
-            Request::session()->flash('status', config('email-confirmation.statusMessages.alreadyConfirmed'));
+            flashWarning('email-confirmation::Messages.AlreadyConfirmed');
             return redirect()->back();
         }
         $user->confirmation_token = str_random(32);
         $user->save();
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
+        flashSuccess('email-confirmation::Messages.PleaseConfirm', ['user' => $user]);
         return redirect(route('login'));
     }
 }
