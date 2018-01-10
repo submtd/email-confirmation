@@ -3,6 +3,8 @@
 namespace Submtd\EmailConfirmation\Listeners;
 
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Mail;
+use Submtd\EmailConfirmation\Mail\ConfirmEmail;
 
 class AuthRegisteredListener
 {
@@ -16,6 +18,6 @@ class AuthRegisteredListener
         $user->confirmation_token = str_random(32);
         $user->save();
         Request::session()->flash('status', $user->confirmation_token);
-        // todo: send email
+        Mail::to($user)->queue(new ConfirmEmail($user));
     }
 }

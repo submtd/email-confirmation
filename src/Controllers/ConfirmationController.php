@@ -5,6 +5,8 @@ namespace Submtd\EmailConfirmation\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Mail;
+use Submtd\EmailConfirmation\Mail\ConfirmEmail;
 
 class ConfirmationController extends Controller
 {
@@ -39,6 +41,7 @@ class ConfirmationController extends Controller
         $user->confirmation_token = str_random(32);
         $user->save();
         // todo: send confirmation email
+        Mail::to($user)->queue(new ConfirmEmail($user));
         return redirect(route('login'));
     }
 }
