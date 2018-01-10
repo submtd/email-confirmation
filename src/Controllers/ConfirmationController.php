@@ -40,11 +40,13 @@ class ConfirmationController extends Controller
             abort(403);
         }
         if ($user->confirmed) {
-            flashWarning('email-confirmation::Messages.AlreadyConfirmed');
+            flash(['view' => 'email-confirmation::Messages.AlreadyConfirmed']);
             return redirect()->back();
         }
-        $user->confirmation_token = str_random(32);
-        $user->save();
+        if (!$user->confirmation_token) {
+            $user->confirmation_token = str_random(32);
+            $user->save();
+        }
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
         flash(['view' => 'email-confirmation::Messages.PleaseConfirm', 'user' => $user]);
