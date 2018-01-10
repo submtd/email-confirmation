@@ -7,9 +7,7 @@
             "email": "harmeyersteve@gmail.com"
         }
     ],
-    "require": {
-        "submtd/flash": "@dev"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "Submtd\\EmailConfirmation\\": "src/"
