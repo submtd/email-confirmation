@@ -2,7 +2,6 @@
 
 namespace Submtd\EmailConfirmation\Listeners;
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Mail;
 use Submtd\EmailConfirmation\Mail\ConfirmEmail;
 
@@ -17,8 +16,7 @@ class AuthRegisteredListener
         $user->confirmed = false;
         $user->confirmation_token = str_random(32);
         $user->save();
-        Request::session()->flash('message', 'email-confirmation::Messages.PleaseConfirm');
-        Request::session()->flash('message_data', $user);
+        flash('email-confirmation::Messages.PleaseConfirm', ['user' => $user]);
         Mail::to($user)->queue(new ConfirmEmail($user));
     }
 }
