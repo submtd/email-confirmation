@@ -6,32 +6,47 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Submtd\EmailConfirmation\Mail\ConfirmEmail;
+use Submtd\EmailConfirmation\Events\EmailConfirmed;
+use Submtd\EmailConfirmation\Events\FailedEmailConfirmation;
 
 class ConfirmationController extends Controller
 {
     protected $model;
+    protected $redirectOnSuccess;
+    protected $redirectOnFail;
+    protected $redirectOnResend;
 
     public function __construct()
     {
         $this->model = config('auth.providers.users.model');
+        $this->redirectOnSuccess = config('email-confirmation.redirectOnSuccess', '/');
+        $this->redirectOnFail = config('email-confirmation.redirectOnFail', '/login');
+        $this->redirectOnAlreadyConfirmed = config('email-confirmation.redirectOnAlreadyConfirmed', '/');
+        $this->redirectOnResend = config('email-confirmation.redirectOnResend', '/login');
     }
 
     public function confirm($id, $token)
     {
         if (!$user = $this->model::find($id)) {
-            abort(404);
+            flash(['view' => 'email-confirmation::Messages.Generic', 'message' => 'Invalid user id', 'severity' => 'warning']);
+            return redirect($this->redirectOnFail);
         }
         if ($user->confirmed) {
-            return redirect()->route('login')->with('status', config('email-confirmation.statusMessages.alreadyConfirmed'));
+            flash(['view' => 'email-confirmation::Messages.AlreadyConfirmed']);
+            return redirect($this->redirectOnAlreadyConfirmed);
         }
         if ($user->confirmation_token != $token) {
-            abort(403);
+            event(new FailedEmailConfirmation($user));
+            flash(['view' => 'email-confirmation::Messages.Generic', 'message' => 'Invalid confirmation token', 'severity' => 'danger']);
+            return redirect($this->redirectOnFail);
         }
         $user->confirmation_token = null;
         $user->confirmed = true;
         $user->save();
-        flash(['view' => 'email-confirmation::Messages.Confirmed']);
-        return redirect(route('login'));
+        event(new EmailConfirmed($user));
+        Auth::loginUsingId($user->id);
+        flash(['view' => 'email-confirmation::Messages.Confirmed', 'severity' => 'success']);
+        return redirect($this->redirectOnSuccess);
     }
 
     public function resend($id)
@@ -50,6 +65,6 @@ class ConfirmationController extends Controller
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
         flash(['view' => 'email-confirmation::Messages.PleaseConfirm', 'user' => $user]);
-        return redirect(route('login'));
+        return redirect($this->redirectOnResend);
     }
 }

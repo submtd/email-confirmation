@@ -1,1 +1,1 @@
-Your email address has been confirmed! You may now log in with your email address and password.
+Your email address has been confirmed!
