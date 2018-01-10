@@ -13,8 +13,9 @@ class AuthAuthenticatedListener
             return;
         }
         if (!Auth::user()->confirmed) {
+            Request::session()->flash('message', 'email-confirmation::Messages.PleaseConfirm');
+            Request::session()->flash('message_data', ['user' => Auth::user()]);
             Auth::logout();
-            Request::session()->flash('status', $event->user->confirmation_token);
         }
     }
 }

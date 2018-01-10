@@ -17,7 +17,8 @@ class AuthRegisteredListener
         $user->confirmed = false;
         $user->confirmation_token = str_random(32);
         $user->save();
-        Request::session()->flash('status', $user->confirmation_token);
+        Request::session()->flash('message', 'email-confirmation::Messages.PleaseConfirm');
+        Request::session()->flash('message_data', $user);
         Mail::to($user)->queue(new ConfirmEmail($user));
     }
 }

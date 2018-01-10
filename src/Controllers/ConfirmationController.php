@@ -19,7 +19,13 @@ class ConfirmationController extends Controller
 
     public function confirm($id, $token)
     {
-        if (!$user = $this->model::whereId($id)->where('confirmation_token', $token)->first()) {
+        if (!$user = $this->model::find($id)) {
+            abort(404);
+        }
+        if ($user->confirmed) {
+            return redirect()->route('login')->with('status', config('email-confirmation.statusMessages.alreadyConfirmed'));
+        }
+        if ($user->confirmation_token != $token) {
             abort(403);
         }
         $user->confirmation_token = null;

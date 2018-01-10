@@ -19,6 +19,6 @@ class ConfirmEmail extends Mailable
 
     public function build()
     {
-        return $this->markdown('email-confirmation::confirm_email');
+        return $this->markdown('email-confirmation::Email.ConfirmEmail');
     }
 }

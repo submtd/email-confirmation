@@ -7,10 +7,11 @@ In order to complete your registration, you must confirm your email address by c
 Confirm Email
 @endcomponent
 
-If you have trouble seeing the button, please copy and paste the following URL in your web browser.
+If you have can't see or click the button, please copy and paste the following URL in your web browser.
 
 {{ url('confirm/' . $user->id . '/'. $user->confirmation_token) }}
 
 Thanks,
+
 {{ config('app.name') }}
 @endcomponent
