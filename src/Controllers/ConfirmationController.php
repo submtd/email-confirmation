@@ -30,7 +30,7 @@ class ConfirmationController extends Controller
         $user->confirmation_token = null;
         $user->confirmed = true;
         $user->save();
-        flashSuccess('email-confirmation::Messages.Confirmed');
+        flash(['view' => 'email-confirmation::Messages.Confirmed']);
         return redirect(route('login'));
     }
 
@@ -47,7 +47,7 @@ class ConfirmationController extends Controller
         $user->save();
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
-        flashSuccess('email-confirmation::Messages.PleaseConfirm', ['user' => $user]);
+        flash(['view' => 'email-confirmation::Messages.PleaseConfirm', 'user' => $user]);
         return redirect(route('login'));
     }
 }
