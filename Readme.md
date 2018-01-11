@@ -1,6 +1,6 @@
 # Email Confirmation for Laravel
 
-This package enables email confirmation for users in your Laravel app.
+This package enables email confirmation for users in your Laravel app. This email confirmation package requires no changes to core laravel files or your user model.
 
 ## Installation
 
