@@ -45,6 +45,14 @@ php artisan vendor:publish --provider="Submtd\EmailConfirmation\Providers\EmailC
 
 After running this command, the status messages can be found in `config/email-confirmation.php` and the email template can be found in `resources/views/vendor/email-confirmation/ConfirmEmail.blade.php`.
 
+If you would like to only publish the config or the views or the migrations, use the `--tag` option on the artisan command.
+
+```bash
+php artisan vendor:publish --provider="Submtd\EmailConfirmation\Providers\EmailConfirmationServiceProvider" --tag=config
+php artisan vendor:publish --provider="Submtd\EmailConfirmation\Providers\EmailConfirmationServiceProvider" --tag=migrations
+php artisan vendor:publish --provider="Submtd\EmailConfirmation\Providers\EmailConfirmationServiceProvider" --tag=views
+```
+
 ## Donation
 
 If this project helped you save some development time, feel free to buy me a beer ;)
