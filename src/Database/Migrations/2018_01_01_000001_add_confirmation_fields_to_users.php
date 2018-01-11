@@ -8,6 +8,7 @@ class AddConfirmationFieldsToUsers extends Migration
 {
     /**
      * Run the migrations.
+     * Add the confirmed and confirmation_token columns
      *
      * @return void
      */
@@ -21,6 +22,7 @@ class AddConfirmationFieldsToUsers extends Migration
 
     /**
      * Reverse the migrations.
+     * Remove the confirmed and confirmation_token columns
      *
      * @return void
      */
