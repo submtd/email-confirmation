@@ -2,20 +2,26 @@
 
 namespace Submtd\EmailConfirmation\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Events\Authenticated;
-use Submtd\EmailConfirmation\Listeners\AuthRegisteredListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
-use Submtd\EmailConfirmation\Listeners\AuthAuthenticatedListener;
 
+/**
+ * The EmailConfirmationListeners class defines event listeners
+ * for when a user authenticates or registers.
+ */
 class EmailConfirmationListeners extends EventServiceProvider
 {
+    /**
+     * The listen array defines the events that we should listen
+     * for and the classes to handle those events.
+     *
+     * @var array
+     */
     protected $listen = [
-        Registered::class => [
-            AuthRegisteredListener::class,
+        'Illuminate\Auth\Events\Registered' => [
+            'Submtd\EmailConfirmation\Listeners\AuthRegisteredListener',
         ],
-        Authenticated::class => [
-            AuthAuthenticatedListener::class,
+        'Illuminate\Auth\Events\Authenticated' => [
+            'Submtd\EmailConfirmation\Listeners\AuthAuthenticatedListener',
         ],
     ];
 }

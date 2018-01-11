@@ -10,6 +10,10 @@ use Submtd\EmailConfirmation\Events\EmailConfirmed;
 use Submtd\EmailConfirmation\Events\FailedEmailConfirmation;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * The ConfirmationController class handles the confirm/{userId}/{confirmationToken}
+ * and confirm/{userId}/resend routes
+ */
 class ConfirmationController extends Controller
 {
     /**

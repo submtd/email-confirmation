@@ -4,11 +4,20 @@ namespace Submtd\EmailConfirmation\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * The EmailConfirmationServiceProvider class is the main
+ * entry point for the package.
+ */
 class EmailConfirmationServiceProvider extends ServiceProvider
 {
+    /**
+     * The service provider boot method
+     *
+     * @return void
+     */
     public function boot()
     {
-        // routes
+        // require our routes file
         require __DIR__ . '/../Routes.php';
         // views
         $this->loadViewsFrom(__DIR__ . '/../Views', 'email-confirmation');
