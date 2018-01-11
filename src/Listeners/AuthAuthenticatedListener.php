@@ -12,7 +12,7 @@ class AuthAuthenticatedListener
             return;
         }
         if (!Auth::user()->confirmed) {
-            flash(['view' => 'email-confirmation::Messages.PleaseConfirm', 'user' => Auth::user()]);
+            flash(parseMessage('email-confirmation.statusMessages.confirm', ['user' => $user]));
             Auth::logout();
         }
     }

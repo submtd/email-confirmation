@@ -65,7 +65,7 @@ class ConfirmationController extends Controller
         }
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
-        flash(['view' => 'email-confirmation::Messages.PleaseConfirm', 'user' => $user]);
+        flash(parseMessage('email-confirmation.statusMessages.confirm', ['user' => $user]));
         return redirect($this->redirectOnResend);
     }
 }
