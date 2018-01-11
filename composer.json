@@ -14,7 +14,10 @@
     "autoload": {
         "psr-4": {
             "Submtd\\EmailConfirmation\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
