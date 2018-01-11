@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Submtd\EmailConfirmation\Mail\ConfirmEmail;
 use Submtd\EmailConfirmation\Events\EmailConfirmed;
 use Submtd\EmailConfirmation\Events\FailedEmailConfirmation;
+use Illuminate\Support\Facades\Request;
 
 class ConfirmationController extends Controller
 {
@@ -28,16 +29,16 @@ class ConfirmationController extends Controller
     public function confirm($id, $token)
     {
         if (!$user = $this->model::find($id)) {
-            flash(config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'))->warning();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'));
             return redirect($this->redirectOnFail);
         }
         if ($user->confirmed) {
-            flash(config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email has already been confirmed.'));
+            Request::session()->flash('status', config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email has already been confirmed.'));
             return redirect($this->redirectOnAlreadyConfirmed);
         }
         if ($user->confirmation_token != $token) {
             event(new FailedEmailConfirmation($user));
-            flash(config('email-confirmation.statusMessages.invalidToken', 'Invalid confirmation token.'))->error();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidToken', 'Invalid confirmation token.'))->error();
             return redirect($this->redirectOnFail);
         }
         $user->confirmation_token = null;
@@ -45,18 +46,18 @@ class ConfirmationController extends Controller
         $user->save();
         event(new EmailConfirmed($user));
         Auth::loginUsingId($user->id);
-        flash(config('email-confirmation.statusMessages.confirmed', 'Your email address has been confirmed!'))->success();
+        Request::session()->flash('status', config('email-confirmation.statusMessages.confirmed', 'Your email address has been confirmed!'))->success();
         return redirect($this->redirectOnSuccess);
     }
 
     public function resend($id)
     {
         if (!$user = $this->model::find($id)) {
-            flash(config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'))->warning();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'))->warning();
             return redirect()->back();
         }
         if ($user->confirmed) {
-            flash(config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email address has already been confirmed.'))->warning();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email address has already been confirmed.'))->warning();
             return redirect()->back();
         }
         if (!$user->confirmation_token) {
@@ -65,7 +66,7 @@ class ConfirmationController extends Controller
         }
         // todo: send confirmation email
         Mail::to($user)->queue(new ConfirmEmail($user));
-        flash(parseMessage('email-confirmation.statusMessages.confirm', ['user' => $user]));
+        Request::session()->flash('status', config('email-confirmation.statusMessages.confirm', 'You must confirm your email address before logging in.'));
         return redirect($this->redirectOnResend);
     }
 }

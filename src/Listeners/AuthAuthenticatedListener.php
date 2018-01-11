@@ -3,6 +3,7 @@
 namespace Submtd\EmailConfirmation\Listeners;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class AuthAuthenticatedListener
 {
@@ -12,7 +13,7 @@ class AuthAuthenticatedListener
             return;
         }
         if (!Auth::user()->confirmed) {
-            flash(parseMessage('email-confirmation.statusMessages.confirm', ['user' => Auth::user()]));
+            Request::session()->flash('status', config('email-confirmation.statusMessages.confirm', 'You must confirm your email address before logging in.'));
             Auth::logout();
         }
     }

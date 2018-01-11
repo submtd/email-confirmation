@@ -8,7 +8,7 @@ use Submtd\EmailConfirmation\Listeners\AuthRegisteredListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use Submtd\EmailConfirmation\Listeners\AuthAuthenticatedListener;
 
-class EmailConfirmationEventServiceProvider extends EventServiceProvider
+class EmailConfirmationListeners extends EventServiceProvider
 {
     protected $listen = [
         Registered::class => [

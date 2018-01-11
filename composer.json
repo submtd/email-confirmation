@@ -1,6 +1,7 @@
 {
     "name": "submtd/email-confirmation",
     "description": "Add email confirmation to Laravel users",
+    "license": "MIT",
     "authors": [
         {
             "name": "Steve Harmeyer",
@@ -8,22 +9,18 @@
         }
     ],
     "require": {
-        "laracasts/flash": "^3.0",
-        "wpb/string-blade-compiler": "^3.5"
+        "php": ">=5.4.0"
     },
     "autoload": {
         "psr-4": {
             "Submtd\\EmailConfirmation\\": "src/"
-        },
-        "files": [
-            "src/Helpers.php"
-        ]
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
                 "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationServiceProvider",
-                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationEventServiceProvider"
+                "Submtd\\EmailConfirmation\\Providers\\EmailConfirmationListeners"
             ]
         }
     }
