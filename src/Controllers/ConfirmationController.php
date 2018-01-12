@@ -87,7 +87,7 @@ class ConfirmationController extends Controller
         if ($user->confirmation_token != $confirmationToken) {
             // token doesn't match! create an event, flash a message and redirect
             event(new FailedEmailConfirmation($user));
-            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidToken', 'Invalid confirmation token.'))->error();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidToken', 'Invalid confirmation token.'));
             return redirect($this->redirectOnFail);
         }
         // everything looks good! let's update the user object
@@ -98,7 +98,7 @@ class ConfirmationController extends Controller
         event(new EmailConfirmed($user));
         // log the user in, flash a message and redirect
         Auth::loginUsingId($user->id);
-        Request::session()->flash('status', config('email-confirmation.statusMessages.confirmed', 'Your email address has been confirmed!'))->success();
+        Request::session()->flash('status', config('email-confirmation.statusMessages.confirmed', 'Your email address has been confirmed!'));
         return redirect($this->redirectOnSuccess);
     }
 
@@ -114,13 +114,13 @@ class ConfirmationController extends Controller
         // attempt to load the user via the userId
         if (!$user = $this->userClass::find($userId)) {
             // user wasn't found... flash a message and redirect
-            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'))->warning();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.invalidUserId', 'Invalid user id.'));
             return redirect()->back();
         }
         // check if the user is already confirmed
         if ($user->confirmed) {
             // user was already confirmed... flash a message and redirect
-            Request::session()->flash('status', config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email address has already been confirmed.'))->warning();
+            Request::session()->flash('status', config('email-confirmation.statusMessages.alreadyConfirmed', 'Your email address has already been confirmed.'));
             return redirect()->back();
         }
         // check to see if the user has a confirmation token
