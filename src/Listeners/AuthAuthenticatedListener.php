@@ -28,7 +28,7 @@ class AuthAuthenticatedListener
         // check to see if the user's email address has been confirmed
         if (!Auth::user()->confirmed) {
             // the email address has not been confirmed, so flash a message and logout
-            Request::session()->flash('status', config('email-confirmation.statusMessages.confirm', 'You must confirm your email address before logging in.'));
+            Request::session()->flash('status', 'You must confirm your email address before logging in.');
             Auth::logout();
         }
     }
